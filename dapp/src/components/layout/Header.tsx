@@ -41,7 +41,9 @@ export default function Header() {
               </li>
             ))}
             <li className='pl-4'>
-              <Button variant='warning'>Stake!</Button>
+              <Link href='/stake'>
+                <Button variant='warning'>Stake!</Button>
+              </Link>
             </li>
           </ul>
         </nav>
