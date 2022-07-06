@@ -4,7 +4,11 @@ import { BeanzDeployerContract } from '@/lib/contractsProvider';
 
 const useWhitelistMintEnabled = () => {
   const { value, error } =
-    useCall({ contract: BeanzDeployerContract, method: 'whitelistMintEnabled', args: [] }) ?? {};
+    useCall({
+      contract: BeanzDeployerContract,
+      method: 'whitelistMintEnabled',
+      args: [],
+    }) ?? {};
   if (error) {
     throw new Error(error.message);
   }

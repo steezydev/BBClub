@@ -4,7 +4,8 @@ import { BeanzDeployerContract } from '@/lib/contractsProvider';
 
 const usePaused = () => {
   const { value, error } =
-    useCall({ contract: BeanzDeployerContract, method: 'paused', args: [] }) ?? {};
+    useCall({ contract: BeanzDeployerContract, method: 'paused', args: [] }) ??
+    {};
   if (error) {
     throw new Error(error.message);
   }
