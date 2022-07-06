@@ -1,0 +1,17 @@
+import { useContractFunction } from '@usedapp/core';
+
+import { BeanzDeployerContract } from '@/lib/contractsProvider';
+
+const use{{pascalCase method}} = () => {
+  const { state, send } = useContractFunction(BeanzDeployerContract, '{{method}}', {
+    transactionName: '{{pascalCase method}}',
+  });
+
+  const sendTrans = (/* ...args */) => {
+    send(/* ...args */);
+  };
+
+  return [sendTrans, state];
+};
+
+export default use{{pascalCase method}};

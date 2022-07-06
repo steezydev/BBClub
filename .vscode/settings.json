@@ -1,0 +1,10 @@
+{
+  "cSpell.diagnosticLevel": "Hint",
+  "solidity.packageDefaultDependenciesDirectory": "smart-contract/node_modules",
+  "editor.tabSize": 2,
+  "conventionalCommits.scopes": [
+    "smart-contract",
+    "dapp",
+    "repo"
+  ]
+}

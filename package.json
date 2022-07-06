@@ -1,0 +1,14 @@
+{
+  "name": "nft-boilerplate",
+  "description": "An all-in-one solution for ERC721 collections.",
+  "author": "steezy2401 (Ivan Ilichev)",
+  "license": "MIT",
+  "version": "2.3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steezy2401/NFTBoilerplate.git"
+  },
+  "scripts": {
+    "build-dapp": "cd smart-contract; yarn; yarn compile; cd ../dapp; yarn; yarn build"
+  }
+}
