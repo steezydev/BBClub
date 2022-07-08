@@ -38,16 +38,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         className={clsxm(
           'nes-btn',
+          disabled && 'is-disabled',
           //#region  //*=========== Variants ===========
-          [
+          !disabled && [
             variant === 'primary' && ['is-primary'],
             variant === 'success' && ['is-success'],
             variant === 'warning' && ['is-warning'],
             variant === 'error' && ['is-error'],
           ],
           //#endregion  //*======== Variants ===========
-          'disabled:cursor-not-allowed',
-          'disabled:cursor-wait',
+          'disabled:is-disabled',
           className
         )}
         {...rest}

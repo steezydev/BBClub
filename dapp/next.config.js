@@ -12,12 +12,9 @@ module.exports = {
     STAKING_CONTRACT_ADDRESS: process.env.STAKING_CONTRACT_ADDRESS,
   },
 
-  // Uncoment to add domain whitelist
-  // images: {
-  //   domains: [
-  //     'res.cloudinary.com',
-  //   ],
-  // },
+  images: {
+    domains: ['ipfs.io'],
+  },
 
   // SVGR
   webpack(config) {

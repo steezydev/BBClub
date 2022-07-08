@@ -1,0 +1,16 @@
+import { useCall } from '@usedapp/core';
+
+import { YourNftTokenContract } from '@/lib/contractsProvider';
+
+const use{{pascalCase method}} = (): [boolean | undefined, Error | undefined] => {
+  const { value, error } =
+    useCall({ contract: YourNftTokenContract, method: '{{method}}', args: [] }) ??
+    {};
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return [value?.[0], error];
+};
+
+export default use{{pascalCase method}};

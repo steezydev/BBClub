@@ -17,21 +17,35 @@ module.exports = function (plop) {
         when: function (response) {
           return response.type == 'Read';
         },
-        type: 'confirm',
-        name: 'isBigNumber',
-        message: 'Is BigNumber?',
-        default: true,
+        type: 'list',
+        name: 'vartype',
+        choices: ['number', 'boolean', 'BigNumber'],
+        message: 'Return value type:',
       },
     ],
     actions: function (data) {
       var actions = [];
 
       if (data.type == 'Read') {
-        actions.push({
-          type: 'add',
-          path: 'src/hooks/use{{pascalCase method}}.tsx',
-          templateFile: 'templates/ReadHook.tsx.hbs',
-        });
+        if (data.vartype == 'number') {
+          actions.push({
+            type: 'add',
+            path: 'src/hooks/use{{pascalCase method}}.tsx',
+            templateFile: 'templates/ReadHookNum.tsx.hbs',
+          });
+        } else if (data.vartype == 'boolean') {
+          actions.push({
+            type: 'add',
+            path: 'src/hooks/use{{pascalCase method}}.tsx',
+            templateFile: 'templates/ReadHookBool.tsx.hbs',
+          });
+        } else if (data.vartype == 'BigNumber') {
+          actions.push({
+            type: 'add',
+            path: 'src/hooks/use{{pascalCase method}}.tsx',
+            templateFile: 'templates/ReadHookBig.tsx.hbs',
+          });
+        }
       } else {
         actions.push({
           type: 'add',
