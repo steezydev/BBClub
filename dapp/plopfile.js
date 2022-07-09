@@ -3,6 +3,12 @@ module.exports = function (plop) {
     description: 'Create a contract hook',
     prompts: [
       {
+        type: 'list',
+        name: 'contract',
+        choices: ['BeanzDeployer', 'BeanzStaker'],
+        message: 'Which contract?',
+      },
+      {
         type: 'input',
         name: 'method',
         message: 'What is the contract method?',
@@ -30,26 +36,26 @@ module.exports = function (plop) {
         if (data.vartype == 'number') {
           actions.push({
             type: 'add',
-            path: 'src/hooks/use{{pascalCase method}}.tsx',
+            path: 'src/hooks/{{contract}}/use{{pascalCase method}}.tsx',
             templateFile: 'templates/ReadHookNum.tsx.hbs',
           });
         } else if (data.vartype == 'boolean') {
           actions.push({
             type: 'add',
-            path: 'src/hooks/use{{pascalCase method}}.tsx',
+            path: 'src/hooks/{{contract}}/use{{pascalCase method}}.tsx',
             templateFile: 'templates/ReadHookBool.tsx.hbs',
           });
         } else if (data.vartype == 'BigNumber') {
           actions.push({
             type: 'add',
-            path: 'src/hooks/use{{pascalCase method}}.tsx',
+            path: 'src/hooks/{{contract}}/use{{pascalCase method}}.tsx',
             templateFile: 'templates/ReadHookBig.tsx.hbs',
           });
         }
       } else {
         actions.push({
           type: 'add',
-          path: 'src/hooks/use{{pascalCase method}}.tsx',
+          path: 'src/hooks/{{contract}}/use{{pascalCase method}}.tsx',
           templateFile: 'templates/WriteHook.tsx.hbs',
         });
       }

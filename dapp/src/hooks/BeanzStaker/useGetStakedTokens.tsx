@@ -2,17 +2,17 @@ import { useCall } from '@usedapp/core';
 import { Falsy } from '@usedapp/core/dist/esm/src/model/types';
 import { useEffect, useState } from 'react';
 
-import { BeanzDeployerContract } from '@/lib/contractsProvider';
+import { BeanzStakerContract } from '@/lib/contractsProvider';
 
-const useWalletOfOwner = (
+const useGetStakedTokens = (
   address: string | Falsy
 ): [number[] | undefined, Error | undefined] => {
   const [ids, setIds] = useState<number[] | undefined>();
 
   const { value, error } =
     useCall({
-      contract: BeanzDeployerContract,
-      method: 'walletOfOwner',
+      contract: BeanzStakerContract,
+      method: 'getStakedTokens',
       args: [address as string],
     }) ?? {};
 
@@ -27,4 +27,4 @@ const useWalletOfOwner = (
   return [ids, error];
 };
 
-export default useWalletOfOwner;
+export default useGetStakedTokens;

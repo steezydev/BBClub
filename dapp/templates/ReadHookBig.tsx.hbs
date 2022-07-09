@@ -1,11 +1,11 @@
 import { useCall } from '@usedapp/core';
 import { BigNumber } from 'ethers';
 
-import { YourNftTokenContract } from '@/lib/contractsProvider';
+import { {{contract}}Contract } from '@/lib/contractsProvider';
 
 const use{{pascalCase method}} = (): [BigNumber | undefined, Error | undefined] => {
   const { value, error } =
-    useCall({ contract: YourNftTokenContract, method: '{{method}}', args: [] }) ??
+    useCall({ contract: {{contract}}Contract, method: '{{method}}', args: [] }) ??
     {};
   if (error) {
     throw new Error(error.message);

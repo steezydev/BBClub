@@ -7,8 +7,8 @@
 //! DON'T REMOVE ANY COMMENTS
 const contractAddresses = {
   // ADDRESSES
-  BeanzStaker : '0xabEc6a9052efe275FAA2D975ad2326eb8cb299a3',
-  BeanzDeployer: '0xacd304447177Ab0604F1A195Ccf8899Ed89EfC80',
+  BeanzStaker : '0x60272B00698C52d052FD7d44c497351dcCeA1A01',
+  BeanzDeployer: '0xabEc6a9052efe275FAA2D975ad2326eb8cb299a3',
 };
 
 export default contractAddresses;

@@ -1,9 +1,9 @@
 import { useContractFunction } from '@usedapp/core';
 
-import { BeanzDeployerContract } from '@/lib/contractsProvider';
+import { {{contract}}Contract } from '@/lib/contractsProvider';
 
 const use{{pascalCase method}} = () => {
-  const { state, send } = useContractFunction(BeanzDeployerContract, '{{method}}', {
+  const { state, send } = useContractFunction({{contract}}Contract, '{{method}}', {
     transactionName: '{{pascalCase method}}',
   });
 
