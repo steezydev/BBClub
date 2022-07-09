@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { BeanzDeployer__factory } from "./BeanzDeployer__factory";
+export { BeanzStaker__factory } from "./BeanzStaker__factory";
 export { YourNftToken__factory } from "./YourNftToken__factory";

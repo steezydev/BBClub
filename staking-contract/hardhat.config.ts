@@ -10,6 +10,8 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import CollectionConfig from "./config/CollectionConfig";
 
+import "hardhat-abi-exporter";
+
 dotenv.config();
 
 /*
@@ -159,6 +161,11 @@ const config: HardhatUserConfig = {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",
     coinmarketcap: process.env.GAS_REPORTER_COIN_MARKET_CAP_API_KEY,
+  },
+  abiExporter: {
+    path: "../dapp/contracts/abi/",
+    runOnCompile: false,
+    only: [":" + CollectionConfig.contractName + "$"],
   },
   etherscan: {
     apiKey: {

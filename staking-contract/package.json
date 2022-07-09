@@ -58,6 +58,10 @@
     "presale-close": "hardhat run scripts/5_presale_close.ts",
     "public-sale-open": "hardhat run scripts/6_public_sale_open.ts",
     "public-sale-close": "hardhat run scripts/7_public_sale_close.ts",
-    "reveal": "hardhat run scripts/8_reveal.ts"
+    "reveal": "hardhat run scripts/8_reveal.ts",
+    "export-abi": "yarn run hardhat export-abi --no-compile"
+  },
+  "dependencies": {
+    "hardhat-abi-exporter": "^2.10.0"
   }
 }

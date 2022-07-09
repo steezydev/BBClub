@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 
 import { getNftsData } from '@/lib/utils/nftData';
-import useWalletOfOwner from '@/hooks/useWalletOfOwner';
+import useWalletOfOwner from '@/hooks/BeanzDeployer/useWalletOfOwner';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';

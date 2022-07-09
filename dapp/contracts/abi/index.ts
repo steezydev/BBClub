@@ -6,3 +6,6 @@
 
 import BeanzDeployer from './contracts/BeanzDeployer.sol/BeanzDeployer.json';
 export { BeanzDeployer };
+
+import BeanzStaker from './contracts/BeanzStaker.sol/BeanzStaker.json';
+export { BeanzStaker };

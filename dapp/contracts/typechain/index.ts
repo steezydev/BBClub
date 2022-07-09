@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { BeanzDeployer } from "./BeanzDeployer";
+export type { BeanzStaker } from "./BeanzStaker";
 export type { YourNftToken } from "./YourNftToken";
 export * as factories from "./factories";
 export { BeanzDeployer__factory } from "./factories/BeanzDeployer__factory";
+export { BeanzStaker__factory } from "./factories/BeanzStaker__factory";
 export { YourNftToken__factory } from "./factories/YourNftToken__factory";

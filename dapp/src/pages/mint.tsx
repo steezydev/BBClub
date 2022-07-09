@@ -1,15 +1,15 @@
 import { useEthers } from '@usedapp/core';
 import * as React from 'react';
 
-import useTokenPrice from '@/hooks/useCost';
-import useMaxFree from '@/hooks/useMaxFree';
-import useMaxFreeTx from '@/hooks/useMaxFreeMintAmountPerTx';
-import useMaxTx from '@/hooks/useMaxMintAmountPerTx';
-import useMaxSupply from '@/hooks/useMaxSupply';
-import usePaused from '@/hooks/usePaused';
-import useTotalSupply from '@/hooks/useTotalSupply';
-import useWhitelistEnabled from '@/hooks/useWhitelistMintEnabled';
-import useWhitelistReserved from '@/hooks/useWhitelistReserved';
+import useTokenPrice from '@/hooks/BeanzDeployer/useCost';
+import useMaxFree from '@/hooks/BeanzDeployer/useMaxFree';
+import useMaxFreeTx from '@/hooks/BeanzDeployer/useMaxFreeMintAmountPerTx';
+import useMaxTx from '@/hooks/BeanzDeployer/useMaxMintAmountPerTx';
+import useMaxSupply from '@/hooks/BeanzDeployer/useMaxSupply';
+import usePaused from '@/hooks/BeanzDeployer/usePaused';
+import useTotalSupply from '@/hooks/BeanzDeployer/useTotalSupply';
+import useWhitelistEnabled from '@/hooks/BeanzDeployer/useWhitelistMintEnabled';
+import useWhitelistReserved from '@/hooks/BeanzDeployer/useWhitelistReserved';
 
 import BeanBubble from '@/components/BeanBubble/BeanBubble';
 import CollectionStatus from '@/components/CollectionStatus/CollectionStatus';
