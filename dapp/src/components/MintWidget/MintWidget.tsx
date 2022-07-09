@@ -2,8 +2,8 @@ import { BigNumber, utils } from 'ethers';
 import React, { useEffect, useState } from 'react';
 
 import Whitelist from '@/lib/utils/Whitelist';
-import useMint from '@/hooks/useMint';
-import useWhitelistMint from '@/hooks/useWhitelistMint';
+import useMint from '@/hooks/BeanzDeployer/useMint';
+import useWhitelistMint from '@/hooks/BeanzDeployer/useWhitelistMint';
 
 interface MintWidgetProps {
   address?: string;
