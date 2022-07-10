@@ -13,7 +13,7 @@ const CollectionConfig: CollectionConfigInterface = {
 
   NftContractAddress: "0xabEc6a9052efe275FAA2D975ad2326eb8cb299a3",
   TokenContractAddress: "0x899888082D59390ABC7F0749F47ae0791269e061",
-  rewPerHour: 100000000,
+  rewPerHour: '10000000000000000',
 
   contractAddress: "0xBa00602f6b8ee3FC57D70b93e82Ff65d32140B35",
   marketplaceIdentifier: "my-nft-token",

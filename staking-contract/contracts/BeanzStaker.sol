@@ -17,7 +17,10 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
 
     // Staker info
     struct Staker {
-        uint256[] tokenIds;
+        // Staked assets
+        uint256[] assets;
+        // Mapping of assets indexes
+        mapping(uint256 => uint256) indexOfAsset;
         // Amount of ERC721 Tokens staked
         uint256 amountStaked;
         // Last time of details update for this User
@@ -38,7 +41,11 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     mapping(uint256 => address) public stakerAddress;
 
     // Constructor function
-    constructor(IERC721 _nftCollection, IERC20 _rewardsToken, uint256 _rewardsPerHour) {
+    constructor(
+        IERC721 _nftCollection,
+        IERC20 _rewardsToken,
+        uint256 _rewardsPerHour
+    ) {
         nftCollection = _nftCollection;
         rewardsToken = _rewardsToken;
         rewardsPerHour = _rewardsPerHour;
@@ -61,7 +68,12 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
                 "Can't stake tokens you don't own!"
             );
             nftCollection.transferFrom(msg.sender, address(this), _tokenIds[i]);
-            stakers[msg.sender].tokenIds.push(_tokenIds[i]);
+            //stakers[msg.sender].tokenIds.push(_tokenIds[i]);
+            stakers[msg.sender].assets.push(_tokenIds[i]);
+            stakers[msg.sender].indexOfAsset[_tokenIds[i]] =
+                stakers[msg.sender].assets.length -
+                1;
+
             stakerAddress[_tokenIds[i]] = msg.sender;
         }
         stakers[msg.sender].amountStaked += len;
@@ -73,7 +85,7 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         view
         returns (uint256[] memory tokenIds)
     {
-        return stakers[_user].tokenIds;
+        return stakers[_user].assets;
     }
 
     // Check if user has any ERC721 Tokens Staked and if he tried to withdraw,
@@ -90,6 +102,9 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         uint256 len = _tokenIds.length;
         for (uint256 i; i < len; ++i) {
             require(stakerAddress[_tokenIds[i]] == msg.sender);
+
+            removeAssetFromArray(_tokenIds[i], msg.sender);
+
             stakerAddress[_tokenIds[i]] = address(0);
             nftCollection.transferFrom(address(this), msg.sender, _tokenIds[i]);
         }
@@ -109,10 +124,10 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         rewardsToken.safeTransfer(msg.sender, rewards);
     }
 
-    // Set the rewardsPerHour variable
-    // function setRewardsPerHour(uint256 _newValue) public onlyOwner {
-    //     rewardsPerHour = _newValue;
-    // }
+    //Set the rewardsPerHour variable
+    function setRewardsPerHour(uint256 _newValue) public onlyOwner {
+        rewardsPerHour = _newValue;
+    }
 
     //////////
     // View //
@@ -127,7 +142,6 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     }
 
     function availableRewards(address _user) internal view returns (uint256) {
-        require(stakers[_user].amountStaked > 0, "User has no tokens staked");
         uint256 _rewards = stakers[_user].unclaimedRewards +
             calculateRewards(_user);
         return _rewards;
@@ -147,7 +161,22 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     {
         return (((
             ((block.timestamp - stakers[_staker].timeOfLastUpdate) *
-                stakers[msg.sender].amountStaked)
+                stakers[_staker].amountStaked)
         ) * rewardsPerHour) / 3600);
+    }
+
+    // Remove the withdrawn asset from the array of assets
+    function removeAssetFromArray(uint256 _assetToDelete, address _staker)
+        internal
+    {
+        uint256 index = stakers[_staker].indexOfAsset[_assetToDelete];
+        uint256 assetsLength = stakers[_staker].assets.length;
+
+        if (assetsLength > 1) {
+            stakers[_staker].assets[index] = stakers[_staker].assets[
+                assetsLength - 1
+            ];
+        }
+        stakers[_staker].assets.pop(); // Implicitly recovers gas from last element storage
     }
 }
