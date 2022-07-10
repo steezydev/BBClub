@@ -14,9 +14,6 @@ const useIsApprovedForAll = (
       method: 'isApprovedForAll',
       args: [address as string, contractAddresses.BeanzStaker],
     }) ?? {};
-  if (error) {
-    throw new Error(error.message);
-  }
 
   return [value?.[0], error];
 };

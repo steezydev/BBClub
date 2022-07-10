@@ -4,7 +4,7 @@ import { BeanzDeployerContract } from '@/lib/contractsProvider';
 
 import contractAddresses from '$/addresses';
 
-const useSetApprovalForAll = (): [() => void, TransactionStatus] => {
+const useSetApprovalForAll = (): [() => Promise<void>, TransactionStatus] => {
   const { state, send } = useContractFunction(
     BeanzDeployerContract,
     'setApprovalForAll',
@@ -13,8 +13,8 @@ const useSetApprovalForAll = (): [() => void, TransactionStatus] => {
     }
   );
 
-  const sendTrans = () => {
-    send(contractAddresses.BeanzStaker, true);
+  const sendTrans = async () => {
+    await send(contractAddresses.BeanzStaker, true);
   };
 
   return [sendTrans, state];

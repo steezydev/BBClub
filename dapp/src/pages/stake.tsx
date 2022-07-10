@@ -28,8 +28,8 @@ export default function StakePage() {
   const [isApprovedForAll] = useIsApprovedForAll(account);
   const [setApprovalForAll] = useSetApprovalForAll();
 
-  const [stake] = useStake();
-  const [withdraw] = useWithdraw();
+  const [stake, stakeState] = useStake();
+  const [withdraw, withdrawState] = useWithdraw();
 
   useEffect(() => {
     if (mintedTokens != undefined) {
@@ -47,11 +47,11 @@ export default function StakePage() {
     }
   }, [stakedTokens]);
 
-  const handleStake = (ids: number[]) => {
+  const handleStake = async (ids: number[]) => {
     if (ids.length <= 0) return undefined;
     if (!isApprovedForAll) {
       //call setApprovalForAll if tokens are not approved
-      setApprovalForAll();
+      await setApprovalForAll();
     }
     // call to stake()
     stake(ids);
@@ -78,6 +78,12 @@ export default function StakePage() {
                 actionName='Unstake'
                 data={stakedTokensData}
                 action={handleUnstake}
+                disableAction={
+                  withdrawState.status != 'None' &&
+                  withdrawState.status != 'Success' &&
+                  withdrawState.status != 'Exception'
+                }
+                emptyMessage='You don`t have any Beanz staked yet :('
               />
             </div>
             <div>
@@ -88,6 +94,12 @@ export default function StakePage() {
                 data={mintedTokensData}
                 actionVariant='warning'
                 action={handleStake}
+                disableAction={
+                  stakeState.status != 'None' &&
+                  stakeState.status != 'Success' &&
+                  stakeState.status != 'Exception'
+                }
+                emptyMessage='You don`t have any Beanz in your wallet :('
               />
             </div>
           </div>

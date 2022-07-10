@@ -15,6 +15,8 @@ interface StakeProps {
   action: (ids: number[]) => void;
   actionVariant?: 'normal' | 'warning' | 'success';
   data: TNftData[] | undefined;
+  emptyMessage: string;
+  disableAction: boolean;
 }
 
 const Stake = ({
@@ -24,6 +26,8 @@ const Stake = ({
   actionName,
   actionVariant = 'normal',
   data,
+  emptyMessage,
+  disableAction,
 }: StakeProps) => {
   const [selectedNfts, setSelectedNfts] = useState<number[]>([]);
 
@@ -49,27 +53,33 @@ const Stake = ({
           <Button
             onClick={() => handleAction()}
             variant={actionVariant}
-            disabled={selectedNfts.length <= 0}
+            disabled={selectedNfts.length <= 0 || disableAction}
           >
             {actionName}
           </Button>
         </div>
       </div>
-      {data ? (
-        <Gallery>
-          {data?.map((data, index) => (
-            <Gallery.Item
-              key={index}
-              name={data.name}
-              rank={data.rank}
-              image={data.image}
-              selected={selectedNfts.includes(data.id)}
-              onClick={() => handleSelect(data.id)}
-            />
-          ))}
-        </Gallery>
+      {data != undefined ? (
+        data.length > 0 ? (
+          <Gallery>
+            {data?.map((data, index) => (
+              <Gallery.Item
+                key={index}
+                name={data.name}
+                rank={data.rank}
+                image={data.image}
+                selected={selectedNfts.includes(data.id)}
+                onClick={() => handleSelect(data.id)}
+              />
+            ))}
+          </Gallery>
+        ) : (
+          <div className='mt-9 text-center'>{emptyMessage}</div>
+        )
       ) : (
-        <Loader />
+        <div className='mt-9 text-center'>
+          <Loader />
+        </div>
       )}
     </div>
   );

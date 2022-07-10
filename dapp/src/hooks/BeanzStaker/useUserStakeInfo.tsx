@@ -18,9 +18,6 @@ const useUserStakeInfo = (
       method: 'userStakeInfo',
       args: [address as string],
     }) ?? {};
-  if (error) {
-    throw new Error(error.message);
-  }
 
   const stakeInfo: IStakeInfo = {
     number: value?.[0].toNumber() ?? null,
