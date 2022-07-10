@@ -11,6 +11,7 @@ const links = [
   { href: '/#about', label: 'About', className: 'text-sm' },
   { href: '/#roadmap', label: 'Roadmap', className: 'text-sm' },
   { href: '/mint', label: 'Mint', className: 'nes-text is-primary text-sm' },
+  { href: '/stake', label: 'Stake', className: 'nes-text is-primary text-sm' },
 ];
 
 export default function Header() {
