@@ -3,13 +3,17 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 
 import { getNftsData } from '@/lib/utils/nftData';
+import useIsApprovedForAll from '@/hooks/BeanzDeployer/useIsApprovedForAll';
+import useSetApprovalForAll from '@/hooks/BeanzDeployer/useSetApprovalForAll';
 import useWalletOfOwner from '@/hooks/BeanzDeployer/useWalletOfOwner';
 import useGetStakedTokens from '@/hooks/BeanzStaker/useGetStakedTokens';
-import useUserStakeInfo from '@/hooks/BeanzStaker/useUserStakeInfo';
+import useStake from '@/hooks/BeanzStaker/useStake';
+import useWithdraw from '@/hooks/BeanzStaker/useWithdraw';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import Stake from '@/components/Stake/Stake';
+import StakeInfo from '@/components/StakeInfo/StakeInfo';
 
 import { TNftData } from '@/types/nft.types';
 
@@ -17,10 +21,15 @@ export default function StakePage() {
   const { account } = useEthers();
   const [mintedTokens] = useWalletOfOwner(account);
   const [stakedTokens] = useGetStakedTokens(account);
-  const [stakeInfo] = useUserStakeInfo(account);
 
   const [stakedTokensData, setStakedTokensData] = useState<TNftData[]>();
   const [mintedTokensData, setMintedTokensData] = useState<TNftData[]>();
+
+  const [isApprovedForAll] = useIsApprovedForAll(account);
+  const [setApprovalForAll] = useSetApprovalForAll();
+
+  const [stake] = useStake();
+  const [withdraw] = useWithdraw();
 
   useEffect(() => {
     if (mintedTokens != undefined) {
@@ -38,6 +47,22 @@ export default function StakePage() {
     }
   }, [stakedTokens]);
 
+  const handleStake = (ids: number[]) => {
+    if (ids.length <= 0) return undefined;
+    if (!isApprovedForAll) {
+      //call setApprovalForAll if tokens are not approved
+      setApprovalForAll();
+    }
+    // call to stake()
+    stake(ids);
+  };
+
+  const handleUnstake = (ids: number[]) => {
+    if (ids.length <= 0) return undefined;
+    // call to withdraw()
+    withdraw(ids);
+  };
+
   return (
     <Layout>
       <Seo templateTitle='Stake' />
@@ -45,39 +70,26 @@ export default function StakePage() {
       <main>
         <section className=''>
           <div className='layout min-h-screen py-20'>
-            <div className='mb-16 flex justify-around text-xl'>
-              <div className='flex flex-col items-center justify-center'>
-                <span className='text-3xl'>{stakeInfo.number ?? '-'}</span>
-                <span className='font-secondary'>beanz staked</span>
-              </div>
-              <div className='flex flex-col items-center justify-center'>
-                <span className='text-3xl'>{stakeInfo.reward ?? '-'}</span>
-                <span className='font-secondary'>accumulated $BBC</span>
-              </div>
-            </div>
+            <StakeInfo address={account} />
             <div className='mb-24'>
               <Stake
                 title='Unstake'
                 description='Select which Beanz to unstake'
                 actionName='Unstake'
                 data={stakedTokensData}
-                action={() => void 1}
+                action={handleUnstake}
               />
             </div>
-            {mintedTokensData ? (
-              <div>
-                <Stake
-                  title='Stake'
-                  description='Select which Beanz to stake'
-                  actionName='Stake'
-                  data={mintedTokensData}
-                  actionVariant='warning'
-                  action={() => void 1}
-                />
-              </div>
-            ) : (
-              <div>You don`t have any Beanz in your wallet :(</div>
-            )}
+            <div>
+              <Stake
+                title='Stake'
+                description='Select which Beanz to stake'
+                actionName='Stake'
+                data={mintedTokensData}
+                actionVariant='warning'
+                action={handleStake}
+              />
+            </div>
           </div>
         </section>
       </main>

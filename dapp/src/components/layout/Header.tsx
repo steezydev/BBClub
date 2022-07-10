@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import clsxm from '@/lib/clsxm';
 
-import Button from '@/components/buttons/Button';
+import Connect from '@/components/Connect/Connect';
 import UnstyledLink from '@/components/links/UnstyledLink';
 
 const links = [
@@ -17,36 +17,41 @@ export default function Header() {
   return (
     <header className='top-0 z-50 bg-body'>
       <div className='layout flex h-20 items-center justify-between'>
-        <Link href='/'>
-          <div className='relative h-20 w-64'>
-            <Image
-              className='relative w-full '
-              src='/images/logo.png'
-              alt='logo'
-              layout='fill'
-              objectFit='contain'
-            />
-          </div>
-        </Link>
-        <nav>
-          <ul className='flex items-center justify-between space-x-5'>
-            {links.map(({ href, label, className }) => (
-              <li key={`${href}${label}`}>
-                <UnstyledLink
-                  href={href}
-                  className={clsxm('hover:text-gray-600', className)}
-                >
-                  {label}
-                </UnstyledLink>
-              </li>
-            ))}
-            <li className='pl-4'>
+        <div className='flex items-center gap-10'>
+          <Link href='/'>
+            <div className='relative h-20 w-64'>
+              <Image
+                className='relative w-full '
+                src='/images/logo.png'
+                alt='logo'
+                layout='fill'
+                objectFit='contain'
+              />
+            </div>
+          </Link>
+          <nav>
+            <ul className='flex items-center justify-between space-x-5'>
+              {links.map(({ href, label, className }) => (
+                <li key={`${href}${label}`}>
+                  <UnstyledLink
+                    href={href}
+                    className={clsxm('hover:text-gray-600', className)}
+                  >
+                    {label}
+                  </UnstyledLink>
+                </li>
+              ))}
+              {/* <li className='pl-4'>
               <Link href='/stake'>
                 <Button variant='warning'>Stake!</Button>
               </Link>
-            </li>
-          </ul>
-        </nav>
+            </li> */}
+            </ul>
+          </nav>
+        </div>
+        <div>
+          <Connect />
+        </div>
       </div>
     </header>
   );

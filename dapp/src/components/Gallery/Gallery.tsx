@@ -16,10 +16,10 @@ interface GalleryItemProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   selected?: boolean;
 }
 
-const rankColor = {
-  Bean: 'is-primary',
-  'Alpha Bean': 'is-error',
-  OG: 'is-warning',
+const rankShort = {
+  Bean: { color: 'is-primary', alias: undefined },
+  'Aplha Bean': { color: 'is-error', alias: 'Alpha' },
+  'OG Bean': { color: 'is-warning', alias: 'OG' },
 };
 
 const GalleryItem = ({
@@ -46,7 +46,13 @@ const GalleryItem = ({
       </div>
       <div className='flex justify-center'>
         <div className='nes-badge is-icon z-20 order-1 flex w-40 items-center '>
-          <span className={`${rankColor[rank]} w-10`}>{rank}</span>
+          <span
+            className={`${rankShort[rank].color} w-10 ${
+              !rankShort[rank].alias && 'hidden'
+            }`}
+          >
+            {rankShort[rank].alias}
+          </span>
           <span className='is-dark static w-full font-secondary text-base font-semibold text-white'>
             {name}
           </span>

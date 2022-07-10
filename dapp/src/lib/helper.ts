@@ -28,7 +28,7 @@ export function openGraph({
 
 export function shortenHex(hex: string | undefined, length = 4) {
   if (hex == undefined) return '0x...';
-  return `${hex.substring(0, length + 2)}…${hex.substring(
+  return `${hex.substring(0, length + 2)}...${hex.substring(
     hex.length - length
   )}`;
 }

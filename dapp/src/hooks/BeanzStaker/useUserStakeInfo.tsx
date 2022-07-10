@@ -6,7 +6,7 @@ import { BeanzStakerContract } from '@/lib/contractsProvider';
 
 interface IStakeInfo {
   number: number | null;
-  reward: string | null;
+  reward: number | null;
 }
 
 const useUserStakeInfo = (
@@ -24,7 +24,10 @@ const useUserStakeInfo = (
 
   const stakeInfo: IStakeInfo = {
     number: value?.[0].toNumber() ?? null,
-    reward: value?.[1] != undefined ? utils.formatEther(value?.[1]) : null,
+    reward:
+      value?.[1] != undefined
+        ? Math.round(parseFloat(utils.formatEther(value?.[1])) * 10000) / 10000
+        : null,
   };
 
   return [stakeInfo, error];

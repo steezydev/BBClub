@@ -12,7 +12,7 @@ interface StakeProps {
   title: string;
   description: string;
   actionName: string;
-  action: () => void;
+  action: (ids: number[]) => void;
   actionVariant?: 'normal' | 'warning' | 'success';
   data: TNftData[] | undefined;
 }
@@ -31,6 +31,11 @@ const Stake = ({
     setSelectedNfts((prev) => filterArray<number>(prev, id));
   };
 
+  const handleAction = () => {
+    action(selectedNfts);
+    setSelectedNfts([]);
+  };
+
   return (
     <div className='w-full'>
       <div className='mb-5 flex items-center justify-between'>
@@ -42,7 +47,7 @@ const Stake = ({
         </div>
         <div>
           <Button
-            onClick={action}
+            onClick={() => handleAction()}
             variant={actionVariant}
             disabled={selectedNfts.length <= 0}
           >
