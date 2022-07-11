@@ -10,12 +10,14 @@ import { utils } from 'ethers';
 import {
   BeanzDeployer,
   // ABI IMPORT
+  BeanzToken,
   BeanzStaker,
 } from '$/abi';
 import contractAddresses from '$/addresses';
 import {
   BeanzDeployer as TBeanzDeployer,
   // TYPECHAIN IMPORT
+  BeanzToken as TBeanzToken,
   BeanzStaker as TBeanzStaker,
 } from '$/typechain';
 
@@ -28,3 +30,8 @@ export const BeanzStakerContract = new Contract(
   contractAddresses.BeanzStaker,
   new utils.Interface(BeanzStaker)
 ) as TBeanzStaker;
+
+export const BeanzTokenContract = new Contract(
+  contractAddresses.BeanzToken,
+  new utils.Interface(BeanzToken)
+) as TBeanzToken;

@@ -1,9 +1,13 @@
 import React from 'react';
 
-export default function Loader() {
+interface LoaderProps {
+  message?: string;
+}
+
+export default function Loader({ message = 'Loading...' }: LoaderProps) {
   return (
     <div className='w-full text-center'>
-      <span>Loading...</span>
+      <span>{message}</span>
     </div>
   );
 }

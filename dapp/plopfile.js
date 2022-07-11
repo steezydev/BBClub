@@ -5,7 +5,7 @@ module.exports = function (plop) {
       {
         type: 'list',
         name: 'contract',
-        choices: ['BeanzDeployer', 'BeanzStaker'],
+        choices: ['BeanzDeployer', 'BeanzStaker', 'BeanzToken'],
         message: 'Which contract?',
       },
       {
