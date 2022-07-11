@@ -21,10 +21,10 @@ const TimelineItem = ({
 }: TimelineItemProps) => {
   return (
     <div
-      className={`mb-8 flex w-full items-center justify-between ${
+      className={`z-20 mb-8 flex w-full flex-col items-center justify-between gap-5 md:gap-0 ${
         position == 'right'
-          ? 'right-timeline'
-          : 'left-timeline flex-row-reverse'
+          ? 'right-timeline md:flex-row'
+          : 'left-timeline md:flex-row-reverse'
       }`}
     >
       <div className='order-1 w-5/12'></div>
@@ -36,7 +36,7 @@ const TimelineItem = ({
         </div>
       ) : null}
       <div
-        className={`nes-container is-rounded order-1 m-0 w-5/12 px-6 py-4 shadow-xl ${className}`}
+        className={`nes-container is-rounded order-1 m-0 w-full px-6 py-4 shadow-xl md:w-5/12 ${className}`}
       >
         <h3 className='mb-3 font-secondary text-xl font-bold text-gray-800'>
           {title}
@@ -51,7 +51,7 @@ const TimelineItem = ({
 
 const Timeline = ({ children }: TimelineProps) => {
   return (
-    <div className='wrap relative h-full overflow-hidden p-10'>
+    <div className='wrap relative h-full overflow-hidden p-2 md:p-10'>
       <div className='border-2-2 absolute left-[50%] h-full border border-solid border-gray-700 border-opacity-20'></div>
       {children}
     </div>

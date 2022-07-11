@@ -68,7 +68,12 @@ const Gallery = ({ children }: GalleryProps) => {
   return (
     <Row gutter={20}>
       {items.map((item, index) => (
-        <Col key={'gallery-col' + index}>{React.cloneElement(item)}</Col>
+        <Col
+          className='flex w-full items-center justify-center md:block md:w-fit'
+          key={'gallery-col' + index}
+        >
+          {React.cloneElement(item)}
+        </Col>
       ))}
     </Row>
   );

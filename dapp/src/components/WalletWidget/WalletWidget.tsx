@@ -38,9 +38,14 @@ export default function WalletWidget({ address }: WalletWidgetProps) {
   return (
     <div className='nes-container is-rounded flex flex-col items-center justify-center gap-10'>
       <div className='flex w-full flex-col items-center justify-center gap-5 border-b-4 border-dashed pb-5'>
-        <div className='nes-badge nes-pointer z-20 flex w-fit items-center'>
-          <span className='is-primary static w-fit px-4  text-lg font-semibold'>
+        <div className='nes-badge nes-pointer z-20 hidden w-fit items-center md:flex'>
+          <span className='is-primary static hidden w-fit px-4 text-sm font-semibold md:block md:text-lg'>
             {shortenHex(address, 8)}
+          </span>
+        </div>
+        <div className='nes-badge nes-pointer z-20 flex w-fit items-center md:hidden'>
+          <span className='is-primary static w-fit px-4 text-sm font-semibold md:text-lg'>
+            {shortenHex(address, 4)}
           </span>
         </div>
 

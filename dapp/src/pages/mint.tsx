@@ -36,9 +36,9 @@ export default function MintPage() {
       <Seo templateTitle='Mint' />
 
       <main>
-        <section className=''>
+        <section className='layout min-h-screen'>
           {account ? (
-            <div className='layout flex flex-col items-center justify-center gap-5 py-20'>
+            <div className='flex flex-col items-center justify-center gap-5 py-20'>
               <CollectionStatus
                 maxSupply={maxSupply}
                 totalSupply={totalSupply}
@@ -71,7 +71,7 @@ export default function MintPage() {
               </BeanBubble>
             </div>
           )}
-          <div className='mb-20'>
+          <div className='mb-56 md:mb-36'>
             <BeanBubble type='rtl'>
               <div className='h-fit font-secondary'>
                 <p>Let me tell you the rules:</p>

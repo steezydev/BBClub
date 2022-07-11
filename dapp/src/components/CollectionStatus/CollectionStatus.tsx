@@ -39,7 +39,7 @@ export default function MintStatus({
           )}
         </div>
 
-        <div className='flex flex-row justify-between gap-20'>
+        <div className='flex flex-col justify-between gap-8 md:flex-row md:gap-20'>
           <div className='flex flex-col items-center gap-2 font-secondary'>
             <span className='text-s font-normal text-[#4a4949]'>
               Free supply

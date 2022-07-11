@@ -60,27 +60,32 @@ export default function MintWidget({
   return (
     <>
       {canMint ? (
-        <div className='nes-container is-rounded flex flex-col items-center justify-center gap-6'>
-          <div className='font-secondary'>
+        <div className='nes-container is-rounded flex w-full flex-col items-center justify-center gap-6 sm:w-fit'>
+          <div className='flex flex-col items-center justify-center font-secondary md:block'>
             <span className='text-xs text-[#4a4949]'>Total price:</span>{' '}
-            <span className='font-bold'>
+            <span className='text-xl font-bold md:text-base'>
               {maxFree <= totalSupply
                 ? utils.formatEther(tokenPrice.mul(mintAmount)) + ' ' + 'ETH'
                 : 0 + ' ' + 'ETH'}
             </span>
           </div>
 
-          <div className='flex flex-col items-center gap-6'>
+          <div className='flex w-full flex-col items-center gap-10 sm:w-fit sm:gap-6'>
             <div className='flex w-full items-center justify-between gap-7'>
               <button className='nes-btn' onClick={() => decrementMintAmount()}>
                 -
               </button>
-              <span className='font-secondary text-2xl'>{mintAmount}</span>
+              <span className='font-secondary text-3xl sm:text-2xl'>
+                {mintAmount}
+              </span>
               <button className='nes-btn' onClick={() => incrementMintAmount()}>
                 +
               </button>
             </div>
-            <button className='nes-btn is-primary' onClick={() => mint()}>
+            <button
+              className='nes-btn is-primary w-full sm:w-fit'
+              onClick={() => mint()}
+            >
               Mint
             </button>
           </div>

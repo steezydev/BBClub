@@ -16,8 +16,8 @@ export default function HomePage() {
       <Seo />
 
       <main>
-        <section className='bg-body'>
-          <div className='layout mt-32 flex min-h-[50vh] flex-col items-center text-center'>
+        <section className='layout min-h-screen bg-body'>
+          <div className=' mt-32 flex flex-col items-center text-center'>
             <BeanBubble>
               {!account ? (
                 <div>
@@ -46,12 +46,10 @@ export default function HomePage() {
               </div>
             </BeanBubble>
           </div>
-        </section>
-        <section
-          id='about'
-          className='layout mt-14 flex min-h-[50vh] items-center'
-        >
-          <div className='nes-container is-rounded font-text shadow-2xl'>
+          <div
+            id='about'
+            className='nes-container is-rounded font-text mt-64 shadow-2xl'
+          >
             <h1>About</h1>
             <p>
               BBC genesis #0 public mint - is the first stage of building strong
@@ -63,10 +61,7 @@ export default function HomePage() {
             </p>
           </div>
         </section>
-        <section
-          id='roadmap'
-          className='layout mx-auto mt-28 h-full min-h-[50vh] w-full'
-        >
+        <section id='roadmap' className='layout mx-auto mt-28 h-full '>
           <div>
             <h1>Roadmap</h1>
             <Timeline>
@@ -87,7 +82,7 @@ export default function HomePage() {
                 position='left'
                 point='June'
                 title='Staking release'
-                className=''
+                className='bg-body'
               >
                 NFT staking mode in BBC ecosystem is a way to earn income &
                 benefits through Proof-of-Stake mechanism. POS in NFT segment
@@ -99,7 +94,7 @@ export default function HomePage() {
               <Timeline.Item
                 position='right'
                 title='LP & marketplace development'
-                className=''
+                className='bg-body'
               >
                 Genesis #0 mint revenue will be distributed strictly up to our
                 economic model. Part of the revenue will be spent on our
@@ -111,7 +106,7 @@ export default function HomePage() {
               <Timeline.Item
                 position='left'
                 title='OG & Alpha tickets distribution'
-                className=''
+                className='bg-body'
               >
                 - 500 OG tickets <br />- 500 Alpha tickets
               </Timeline.Item>
@@ -119,7 +114,7 @@ export default function HomePage() {
                 position='right'
                 title='Pending...'
                 point='July'
-                className=''
+                className='bg-body'
               >
                 ???
               </Timeline.Item>
