@@ -9,16 +9,16 @@ import { utils } from 'ethers';
 
 import {
   BeanzDeployer,
+  BeanzStaker,
   // ABI IMPORT
   BeanzToken,
-  BeanzStaker,
 } from '$/abi';
 import contractAddresses from '$/addresses';
 import {
   BeanzDeployer as TBeanzDeployer,
+  BeanzStaker as TBeanzStaker,
   // TYPECHAIN IMPORT
   BeanzToken as TBeanzToken,
-  BeanzStaker as TBeanzStaker,
 } from '$/typechain';
 
 export const BeanzDeployerContract = new Contract(
