@@ -87,7 +87,9 @@ const Stake = ({
                 rank={data.rank}
                 image={data.image}
                 selected={selectedNfts.includes(data.id)}
-                onClick={() => handleSelect(data.id)}
+                onClick={
+                  !needsApproval ? () => handleSelect(data.id) : () => void 1
+                }
               />
             ))}
           </Gallery>
