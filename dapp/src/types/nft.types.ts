@@ -3,7 +3,7 @@ export interface TNftMetadata {
   rank: TRank;
 }
 
-export type TRank = 'Bean' | 'Aplha Bean' | 'OG Bean';
+export type TRank = 'Bean' | 'Alpha Bean' | 'OG Bean';
 
 export type TNftImage = string;
 

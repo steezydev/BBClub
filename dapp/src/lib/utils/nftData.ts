@@ -4,7 +4,7 @@ import { TNftData, TNftImage, TNftMetadata } from '@/types/nft.types';
 
 const TOKEN_NAME = 'BBC';
 const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
-const METADATA_PREFIX = 'QmeQpBiSF7ELgcgs4pwF6EoGFegcBFSbYxeUbStBCuTHdc';
+const METADATA_PREFIX = 'QmWYZ5ibdydZZHWdnPutxrEPWkzENL8z7zMGTPBbg7uSxj';
 const IMAGE_PREFIX = 'QmQF23AYjEx5R7SGtKQ3NRgeeUiY572HM6QqN2mUW2HaFU';
 
 async function getNftMetadata(id: number): Promise<TNftMetadata> {

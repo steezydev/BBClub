@@ -18,7 +18,7 @@ interface GalleryItemProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
 
 const rankShort = {
   Bean: { color: 'is-primary', alias: undefined },
-  'Aplha Bean': { color: 'is-error', alias: 'Alpha' },
+  'Alpha Bean': { color: 'is-error', alias: 'Alpha' },
   'OG Bean': { color: 'is-warning', alias: 'OG' },
 };
 
