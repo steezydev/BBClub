@@ -50,7 +50,9 @@ export default function HomePage() {
             id='about'
             className='nes-container is-rounded font-text mt-64 shadow-2xl'
           >
-            <h1>About</h1>
+            <h1>
+              <span className='nes-text is-primary'>#</span> About
+            </h1>
             <p>
               BBC genesis #0 public mint - is the first stage of building strong
               community-corellated ecosystem. Our main goal is to provide real
@@ -63,7 +65,9 @@ export default function HomePage() {
         </section>
         <section id='roadmap' className='layout mx-auto mt-28 h-full '>
           <div>
-            <h1>Roadmap</h1>
+            <h1>
+              <span className='nes-text is-primary'>#</span> Roadmap
+            </h1>
             <Timeline>
               <Timeline.Item
                 position='right'
