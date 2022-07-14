@@ -37,7 +37,9 @@ export default function WalletPage() {
         <section className=''>
           <div className='layout min-h-screen py-20'>
             <div className='mb-10 flex flex-col justify-between gap-1 md:flex-row md:gap-0'>
-              <h1>Wallet</h1>
+              <h1>
+                <span className='nes-text is-primary'>#</span> Wallet
+              </h1>
               {account ? (
                 <Button onClick={() => deactivate()} variant='normal'>
                   Disconnect
@@ -51,7 +53,10 @@ export default function WalletPage() {
                 </div>
                 <div className='mt-14'>
                   <div className='flex flex-col justify-between gap-4 md:flex-row md:gap-0'>
-                    <h3>Minted Beanz</h3>
+                    <h3>
+                      <span className='nes-text is-primary'>#</span> Minted
+                      Beanz
+                    </h3>
                     <Link href='/stake'>
                       <Button variant='warning'>Stake!</Button>
                     </Link>

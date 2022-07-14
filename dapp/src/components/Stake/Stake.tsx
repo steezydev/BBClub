@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { filterArray } from '@/lib/utils/filterArray';
+import useSetApprovalForAll from '@/hooks/BeanzDeployer/useSetApprovalForAll';
 
 import Button from '@/components/buttons/Button';
 import Gallery from '@/components/Gallery/Gallery';
@@ -17,6 +18,7 @@ interface StakeProps {
   data: TNftData[] | undefined;
   emptyMessage: string;
   disableAction: boolean;
+  needsApproval?: boolean;
 }
 
 const Stake = ({
@@ -28,8 +30,11 @@ const Stake = ({
   data,
   emptyMessage,
   disableAction,
+  needsApproval = false,
 }: StakeProps) => {
   const [selectedNfts, setSelectedNfts] = useState<number[]>([]);
+
+  const [setApprovalForAll, approvalState] = useSetApprovalForAll();
 
   const handleSelect = (id: number) => {
     setSelectedNfts((prev) => filterArray<number>(prev, id));
@@ -50,13 +55,26 @@ const Stake = ({
           <span>{description}</span>
         </div>
         <div>
-          <Button
-            onClick={() => handleAction()}
-            variant={actionVariant}
-            disabled={selectedNfts.length <= 0 || disableAction}
-          >
-            {actionName}
-          </Button>
+          {!needsApproval ? (
+            <Button
+              onClick={() => handleAction()}
+              variant={actionVariant}
+              disabled={selectedNfts.length <= 0 || disableAction}
+            >
+              {actionName}
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setApprovalForAll()}
+              variant='success'
+              disabled={
+                approvalState.status != 'None' &&
+                approvalState.status != 'Exception'
+              }
+            >
+              Approve
+            </Button>
+          )}
         </div>
       </div>
       {data != undefined ? (
@@ -69,7 +87,9 @@ const Stake = ({
                 rank={data.rank}
                 image={data.image}
                 selected={selectedNfts.includes(data.id)}
-                onClick={() => handleSelect(data.id)}
+                onClick={
+                  !needsApproval ? () => handleSelect(data.id) : () => void 1
+                }
               />
             ))}
           </Gallery>

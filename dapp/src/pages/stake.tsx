@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import { getNftsData } from '@/lib/utils/nftData';
 import useIsApprovedForAll from '@/hooks/BeanzDeployer/useIsApprovedForAll';
-import useSetApprovalForAll from '@/hooks/BeanzDeployer/useSetApprovalForAll';
 import useWalletOfOwner from '@/hooks/BeanzDeployer/useWalletOfOwner';
 import useGetStakedTokens from '@/hooks/BeanzStaker/useGetStakedTokens';
 import useStake from '@/hooks/BeanzStaker/useStake';
@@ -26,7 +25,6 @@ export default function StakePage() {
   const [mintedTokensData, setMintedTokensData] = useState<TNftData[]>();
 
   const [isApprovedForAll] = useIsApprovedForAll(account);
-  const [setApprovalForAll] = useSetApprovalForAll();
 
   const [stake, stakeState] = useStake();
   const [withdraw, withdrawState] = useWithdraw();
@@ -49,10 +47,6 @@ export default function StakePage() {
 
   const handleStake = async (ids: number[]) => {
     if (ids.length <= 0) return undefined;
-    if (!isApprovedForAll) {
-      //call setApprovalForAll if tokens are not approved
-      await setApprovalForAll();
-    }
     // call to stake()
     stake(ids);
   };
@@ -100,6 +94,9 @@ export default function StakePage() {
                   stakeState.status != 'Exception'
                 }
                 emptyMessage='You don`t have any Beanz in your wallet :('
+                needsApproval={
+                  !isApprovedForAll && isApprovedForAll != undefined
+                }
               />
             </div>
           </div>
