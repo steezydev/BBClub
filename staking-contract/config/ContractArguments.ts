@@ -5,7 +5,9 @@ import CollectionConfig from "./CollectionConfig";
 const ContractArguments = [
   CollectionConfig.NftContractAddress,
   CollectionConfig.TokenContractAddress,
-  CollectionConfig.rewPerHour
+  CollectionConfig.rewPerHour,
+  CollectionConfig.rewPerBurn,
+  CollectionConfig.maxBurnTokens,
 ] as const;
 
 export default ContractArguments;

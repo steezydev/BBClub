@@ -14,6 +14,8 @@ export default interface CollectionConfigInterface {
   NftContractAddress: string;
   TokenContractAddress: string;
   rewPerHour: string;
+  rewPerBurn: string;
+  maxBurnTokens: number;
 
   contractName: string;
   contractAddress: string | null;

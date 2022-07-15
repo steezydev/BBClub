@@ -14,8 +14,10 @@ const CollectionConfig: CollectionConfigInterface = {
   NftContractAddress: "0xabEc6a9052efe275FAA2D975ad2326eb8cb299a3",
   TokenContractAddress: "0x899888082D59390ABC7F0749F47ae0791269e061",
   rewPerHour: '10000000000000000',
+  rewPerBurn: '1000000000000000000',
+  maxBurnTokens: 4,
 
-  contractAddress: "0xBa00602f6b8ee3FC57D70b93e82Ff65d32140B35",
+  contractAddress: "0xAa056fA74F86b0a2eDEC1BA6bb6af5b291B542Fb",
   marketplaceIdentifier: "my-nft-token",
   marketplaceConfig: Marketplaces.openSea,
   whitelistAddresses,
