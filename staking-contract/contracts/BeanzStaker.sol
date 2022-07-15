@@ -108,7 +108,7 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     function burn(uint256[] calldata _tokenIds) external nonReentrant {
         require(!burnPaused, "Burn is paused");
         uint256 len = _tokenIds.length;
-        require(len > 0 && len < maxBurnTokens - 1, "Invalid number of tokens");
+        require(len > 0 && len < maxBurnTokens + 1, "Invalid number of tokens");
 
         for (uint256 i; i < len; ++i) {
             nftCollection.transferFrom(msg.sender, nullAddr, _tokenIds[i]);
