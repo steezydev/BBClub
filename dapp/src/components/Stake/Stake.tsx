@@ -19,6 +19,7 @@ interface StakeProps {
   emptyMessage: string;
   disableAction: boolean;
   needsApproval?: boolean;
+  errorMessage?: string;
 }
 
 const Stake = ({
@@ -31,6 +32,7 @@ const Stake = ({
   emptyMessage,
   disableAction,
   needsApproval = false,
+  errorMessage,
 }: StakeProps) => {
   const [selectedNfts, setSelectedNfts] = useState<number[]>([]);
 
@@ -52,7 +54,11 @@ const Stake = ({
           <h2>
             <span className='nes-text is-primary'>#</span> {title}
           </h2>
-          <span>{description}</span>
+          {errorMessage != undefined ? (
+            <span className='nes-text is-error'>{errorMessage}</span>
+          ) : (
+            <span>{description}</span>
+          )}
         </div>
         <div>
           {!needsApproval ? (
@@ -88,7 +94,9 @@ const Stake = ({
                 image={data.image}
                 selected={selectedNfts.includes(data.id)}
                 onClick={
-                  !needsApproval ? () => handleSelect(data.id) : () => void 1
+                  !needsApproval && !disableAction
+                    ? () => handleSelect(data.id)
+                    : () => void 1
                 }
               />
             ))}
