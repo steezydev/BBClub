@@ -162,6 +162,19 @@
   },
   {
     "inputs": [],
+    "name": "rewardsPerBurn",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "rewardsToken",
     "outputs": [
       {
@@ -287,12 +300,30 @@
       },
       {
         "internalType": "uint256",
+        "name": "amountBurned",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "timeOfLastUpdate",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
         "name": "unclaimedRewards",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalBurned",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -325,6 +356,11 @@
       {
         "internalType": "uint256",
         "name": "_tokensStaked",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokensBurned",
         "type": "uint256"
       },
       {
