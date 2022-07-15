@@ -56,7 +56,7 @@ contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
     }
 
     modifier mintCompliance(uint256 _mintAmount) {
-        bool isFree = ((totalSupply() + _mintAmount < maxFree + 1) &&
+        bool isFree = ((totalSupply() + _mintAmount <= maxFree - whitelistReserved) &&
             (mintedWallets[_msgSender()] + _mintAmount <= maxFreePerWallet)) && !whitelistMintEnabled;
 
         if (isFree) {
@@ -87,7 +87,7 @@ contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
     }
 
     modifier mintPriceCompliance(uint256 _mintAmount) {
-        bool isFree = ((totalSupply() + _mintAmount < maxFree + 1) &&
+        bool isFree = ((totalSupply() + _mintAmount <= maxFree - whitelistReserved) &&
             (mintedWallets[_msgSender()] + _mintAmount <= maxFreePerWallet)) && !whitelistMintEnabled;
 
         uint256 price = cost;
@@ -134,9 +134,13 @@ contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
 
     function mintForAddress(uint256 _mintAmount, address _receiver)
         public
-        mintCompliance(_mintAmount)
         onlyOwner
     {
+      require(
+            totalSupply() + _mintAmount <= maxSupply,
+            "Max supply exceeded!"
+        );
+
         _safeMint(_receiver, _mintAmount);
     }
 

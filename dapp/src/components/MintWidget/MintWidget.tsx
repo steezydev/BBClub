@@ -28,7 +28,7 @@ export default function MintWidget({
 }: MintWidgetProps) {
   const [mintAmount, setMintAmount] = useState(1);
   const [canMint, setCanMint] = useState(false);
-  const [mintTokens] = useMint();
+  const [mintTokens, mintState] = useMint();
   const [whitelistMintTokens] = useWhitelistMint(address);
 
   useEffect(() => {
@@ -59,6 +59,9 @@ export default function MintWidget({
 
   return (
     <>
+      {mintState.status == 'Exception' ? (
+        <p className='is-error nes-text mt-3'>{mintState.errorMessage}</p>
+      ) : null}
       {canMint ? (
         <div className='nes-container is-rounded flex w-full flex-col items-center justify-center gap-6 sm:w-fit'>
           <div className='flex flex-col items-center justify-center font-secondary md:block'>

@@ -5,7 +5,8 @@ import { utils } from 'ethers';
 import { BeanzStakerContract } from '@/lib/contractsProvider';
 
 interface IStakeInfo {
-  number: number | null;
+  amountStaked: number | null;
+  amountBurned: number | null;
   reward: number | null;
 }
 
@@ -20,9 +21,10 @@ const useUserStakeInfo = (
     }) ?? {};
 
   const stakeInfo: IStakeInfo = {
-    number: value?.[0].toNumber() ?? null,
+    amountStaked: value?.[0].toNumber() ?? null,
+    amountBurned: value?.[1].toNumber() ?? null,
     reward:
-      value?.[1] != undefined
+      value?.[2] != undefined
         ? Math.round(parseFloat(utils.formatEther(value?.[1])) * 10000) / 10000
         : null,
   };

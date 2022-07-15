@@ -1,6 +1,7 @@
 import { useEthers } from '@usedapp/core';
 import * as React from 'react';
 
+import { shortenHex } from '@/lib/helper';
 import useTokenPrice from '@/hooks/BeanzDeployer/useCost';
 import useMaxFree from '@/hooks/BeanzDeployer/useMaxFree';
 import useMaxFreeTx from '@/hooks/BeanzDeployer/useMaxFreeMintAmountPerTx';
@@ -17,6 +18,8 @@ import Layout from '@/components/layout/Layout';
 import MintWidget from '@/components/MintWidget/MintWidget';
 import { Profile } from '@/components/Profile/Profile';
 import Seo from '@/components/Seo';
+
+import contractAddresses from '$/addresses';
 
 export default function MintPage() {
   const { account } = useEthers();
@@ -106,6 +109,17 @@ export default function MintPage() {
                   <span className='text-base font-bold'>whitelist</span>. Go to
                   our <a href='https://twitter.com/basedbeanzclub'>twitter</a>{' '}
                   to learn more on how to get into whitelist!
+                </p>
+                <p className='mt-5'>
+                  Contract:{' '}
+                  <a
+                    target='_blank'
+                    className='nes-text is-primary'
+                    href={`https://etherscan.io/address/${contractAddresses.BeanzDeployer}`}
+                    rel='noreferrer'
+                  >
+                    {shortenHex(contractAddresses.BeanzDeployer, 10)}
+                  </a>
                 </p>
               </div>
             </BeanBubble>

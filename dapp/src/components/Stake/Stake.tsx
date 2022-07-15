@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { filterArray } from '@/lib/utils/filterArray';
 import useSetApprovalForAll from '@/hooks/BeanzDeployer/useSetApprovalForAll';
@@ -14,11 +14,14 @@ interface StakeProps {
   description: string;
   actionName: string;
   action: (ids: number[]) => void;
-  actionVariant?: 'normal' | 'warning' | 'success';
+  actionVariant?: 'normal' | 'warning' | 'success' | 'error';
   data: TNftData[] | undefined;
   emptyMessage: string;
   disableAction: boolean;
   needsApproval?: boolean;
+  errorMessage?: string;
+  maxSelect?: number;
+  selectAction?: (selectedNfts: number[]) => void;
 }
 
 const Stake = ({
@@ -31,14 +34,27 @@ const Stake = ({
   emptyMessage,
   disableAction,
   needsApproval = false,
+  errorMessage,
+  maxSelect = 999999,
+  selectAction = () => void 1,
 }: StakeProps) => {
   const [selectedNfts, setSelectedNfts] = useState<number[]>([]);
 
   const [setApprovalForAll, approvalState] = useSetApprovalForAll();
 
   const handleSelect = (id: number) => {
-    setSelectedNfts((prev) => filterArray<number>(prev, id));
+    setSelectedNfts((prev) => {
+      if (maxSelect < filterArray<number>(prev, id).length) {
+        return prev;
+      }
+      return filterArray<number>(prev, id);
+    });
   };
+
+  useEffect(() => {
+    selectAction(selectedNfts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedNfts]);
 
   const handleAction = () => {
     action(selectedNfts);
@@ -52,7 +68,11 @@ const Stake = ({
           <h2>
             <span className='nes-text is-primary'>#</span> {title}
           </h2>
-          <span>{description}</span>
+          {errorMessage != undefined ? (
+            <span className='nes-text is-error'>{errorMessage}</span>
+          ) : (
+            <span>{description}</span>
+          )}
         </div>
         <div>
           {!needsApproval ? (
@@ -88,7 +108,9 @@ const Stake = ({
                 image={data.image}
                 selected={selectedNfts.includes(data.id)}
                 onClick={
-                  !needsApproval ? () => handleSelect(data.id) : () => void 1
+                  !needsApproval && !disableAction
+                    ? () => handleSelect(data.id)
+                    : () => void 1
                 }
               />
             ))}

@@ -7,6 +7,7 @@ import useIsApprovedForAll from '@/hooks/BeanzDeployer/useIsApprovedForAll';
 import useWalletOfOwner from '@/hooks/BeanzDeployer/useWalletOfOwner';
 import useGetStakedTokens from '@/hooks/BeanzStaker/useGetStakedTokens';
 import useStake from '@/hooks/BeanzStaker/useStake';
+import useStakePaused from '@/hooks/BeanzStaker/useStakePaused';
 import useWithdraw from '@/hooks/BeanzStaker/useWithdraw';
 
 import Layout from '@/components/layout/Layout';
@@ -23,8 +24,12 @@ export default function StakePage() {
 
   const [stakedTokensData, setStakedTokensData] = useState<TNftData[]>();
   const [mintedTokensData, setMintedTokensData] = useState<TNftData[]>();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const [isApprovedForAll] = useIsApprovedForAll(account);
+  const [stakePaused] = useStakePaused();
 
   const [stake, stakeState] = useStake();
   const [withdraw, withdrawState] = useWithdraw();
@@ -56,6 +61,12 @@ export default function StakePage() {
     // call to withdraw()
     withdraw(ids);
   };
+
+  useEffect(() => {
+    if (!isApprovedForAll && isApprovedForAll != undefined)
+      setErrorMessage('Beanz need approval...');
+    if (stakePaused ?? false) setErrorMessage('The staking is paused...');
+  }, [stakePaused, isApprovedForAll]);
 
   return (
     <Layout>
@@ -89,11 +100,13 @@ export default function StakePage() {
                 actionVariant='warning'
                 action={handleStake}
                 disableAction={
-                  stakeState.status != 'None' &&
-                  stakeState.status != 'Success' &&
-                  stakeState.status != 'Exception'
+                  (stakeState.status != 'None' &&
+                    stakeState.status != 'Success' &&
+                    stakeState.status != 'Exception') ||
+                  (stakePaused ?? false)
                 }
                 emptyMessage='You don`t have any Beanz in your wallet :('
+                errorMessage={errorMessage}
                 needsApproval={
                   !isApprovedForAll && isApprovedForAll != undefined
                 }

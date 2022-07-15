@@ -24,6 +24,16 @@ const _abi = [
         name: "_rewardsPerHour",
         type: "uint256",
       },
+      {
+        internalType: "uint256",
+        name: "_rewardsPerBurn",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_maxBurnTokens",
+        type: "uint256",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -46,6 +56,32 @@ const _abi = [
     ],
     name: "OwnershipTransferred",
     type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "_tokenIds",
+        type: "uint256[]",
+      },
+    ],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "burnPaused",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
@@ -75,10 +111,36 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "maxBurnTokens",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "nftCollection",
     outputs: [
       {
         internalType: "contract IERC721",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "nullAddr",
+    outputs: [
+      {
+        internalType: "address",
         name: "",
         type: "address",
       },
@@ -122,6 +184,58 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "bool",
+        name: "_state",
+        type: "bool",
+      },
+    ],
+    name: "setBurnPaused",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_maxBurnTokens",
+        type: "uint256",
+      },
+    ],
+    name: "setMaxBurnTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_newValue",
+        type: "uint256",
+      },
+    ],
+    name: "setRewardsPerHour",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bool",
+        name: "_state",
+        type: "bool",
+      },
+    ],
+    name: "setStakedPaused",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256[]",
         name: "_tokenIds",
         type: "uint256[]",
@@ -130,6 +244,19 @@ const _abi = [
     name: "stake",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakePaused",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

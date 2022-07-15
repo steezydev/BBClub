@@ -105,6 +105,9 @@ export const DropdownMenuDemo = () => {
           <DropdownMenuItem>
             <Link href='/wallet'>Wallet</Link>
           </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href='/burn'>Burn</Link>
+          </DropdownMenuItem>
         </DropdownMenuPrimitive.Content>
       </DropdownMenu>
     </Box>

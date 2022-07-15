@@ -14,7 +14,7 @@ export default function StakeInfo({ address }: StakeInfoProps) {
   return (
     <div className='mb-16 flex flex-col items-center gap-8 text-xl md:flex-row md:items-start md:justify-around md:gap-0'>
       <div className='flex flex-col items-center justify-center'>
-        <span className='text-3xl'>{stakeInfo.number ?? '-'}</span>
+        <span className='text-3xl'>{stakeInfo.amountStaked ?? '-'}</span>
         <span className='font-secondary'>beanz staked</span>
       </div>
       <div className='flex flex-col items-center justify-center'>
