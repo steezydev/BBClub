@@ -5,20 +5,23 @@ import { useEffect, useState } from 'react';
 import { getNftsData } from '@/lib/utils/nftData';
 import useIsApprovedForAll from '@/hooks/BeanzDeployer/useIsApprovedForAll';
 import useWalletOfOwner from '@/hooks/BeanzDeployer/useWalletOfOwner';
+import useBurn from '@/hooks/BeanzStaker/useBurn';
 import useBurnPaused from '@/hooks/BeanzStaker/useBurnPaused';
-import useStake from '@/hooks/BeanzStaker/useStake';
+import useMaxBurnTokens from '@/hooks/BeanzStaker/useMaxBurnTokens';
 
+import BurnInfo from '@/components/BurnInfo/BurnInfo';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import Stake from '@/components/Stake/Stake';
-import StakeInfo from '@/components/StakeInfo/StakeInfo';
 
 import { TNftData } from '@/types/nft.types';
 
 export default function BurnPage() {
   const { account } = useEthers();
   const [mintedTokens] = useWalletOfOwner(account);
+  const [maxBurnAmount] = useMaxBurnTokens();
 
+  const [selectedAmount, setSelectedAmount] = useState(0);
   const [mintedTokensData, setMintedTokensData] = useState<TNftData[]>();
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -27,7 +30,7 @@ export default function BurnPage() {
   const [isApprovedForAll] = useIsApprovedForAll(account);
   const [burnPaused] = useBurnPaused();
 
-  const [stake, stakeState] = useStake();
+  const [burn, burnState] = useBurn();
 
   useEffect(() => {
     if (mintedTokens != undefined) {
@@ -40,7 +43,11 @@ export default function BurnPage() {
   const handleStake = async (ids: number[]) => {
     if (ids.length <= 0) return undefined;
     // call to stake()
-    stake(ids);
+    burn(ids);
+  };
+
+  const handleSelect = (ids: number[]) => {
+    setSelectedAmount(ids.length);
   };
 
   useEffect(() => {
@@ -56,7 +63,11 @@ export default function BurnPage() {
       <main>
         <section className=''>
           <div className='layout min-h-screen py-20'>
-            <StakeInfo address={account} />
+            <BurnInfo
+              address={account}
+              selectedAmount={selectedAmount}
+              maxBurnAmount={maxBurnAmount}
+            />
             <div>
               <Stake
                 title='Burn'
@@ -66,13 +77,15 @@ export default function BurnPage() {
                 actionVariant='error'
                 action={handleStake}
                 disableAction={
-                  (stakeState.status != 'None' &&
-                    stakeState.status != 'Success' &&
-                    stakeState.status != 'Exception') ||
+                  (burnState.status != 'None' &&
+                    burnState.status != 'Success' &&
+                    burnState.status != 'Exception') ||
                   (burnPaused ?? false)
                 }
                 emptyMessage='You don`t have any Beanz in your wallet :('
                 errorMessage={errorMessage}
+                selectAction={handleSelect}
+                maxSelect={maxBurnAmount}
                 needsApproval={
                   !isApprovedForAll && isApprovedForAll != undefined
                 }

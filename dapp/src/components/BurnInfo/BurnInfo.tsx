@@ -2,11 +2,17 @@ import React from 'react';
 
 import useUserStakeInfo from '@/hooks/BeanzStaker/useUserStakeInfo';
 
-interface StakeInfoProps {
+interface BurnInfoProps {
   address: string | undefined;
+  maxBurnAmount?: number;
+  selectedAmount?: number;
 }
 
-export default function StakeInfo({ address }: StakeInfoProps) {
+export default function BurnInfo({
+  address,
+  maxBurnAmount,
+  selectedAmount = 0,
+}: BurnInfoProps) {
   const [stakeInfo] = useUserStakeInfo(address);
 
   return (
@@ -17,9 +23,14 @@ export default function StakeInfo({ address }: StakeInfoProps) {
       </div>
       <div className='flex flex-col items-center justify-center'>
         <span className='relative'>
-          <span className='text-3xl'>{stakeInfo.reward ?? '-'}</span>
+          <span className='text-3xl'>
+            {maxBurnAmount != undefined
+              ? Math.round((100 / maxBurnAmount) * selectedAmount * 10) / 10
+              : 0}{' '}
+            %
+          </span>
         </span>
-        <span className='font-secondary'>accumulated $BBC</span>
+        <span className='font-secondary'>success chance</span>
       </div>
     </div>
   );
