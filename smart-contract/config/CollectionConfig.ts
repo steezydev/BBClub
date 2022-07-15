@@ -13,7 +13,7 @@ const CollectionConfig: CollectionConfigInterface = {
   tokenName: "Based Beanz Club",
   tokenSymbol: "BBC",
   maxSupply: 5555,
-  metadataUri: "ipfs://QmeQpBiSF7ELgcgs4pwF6EoGFegcBFSbYxeUbStBCuTHdc/",
+  metadataUri: "ipfs://QmWYZ5ibdydZZHWdnPutxrEPWkzENL8z7zMGTPBbg7uSxj/",
 
   // ? FREE MINT
   whitelistReserved: 1110,
