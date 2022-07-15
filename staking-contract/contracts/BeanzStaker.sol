@@ -23,6 +23,8 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         mapping(uint256 => uint256) indexOfAsset;
         // Amount of ERC721 Tokens staked
         uint256 amountStaked;
+        // Amount of ERC721 Tokens burnt
+        uint256 amountBurned;
         // Last time of details update for this User
         uint256 timeOfLastUpdate;
         // Calculated, but unclaimed rewards for the User. The rewards are
@@ -35,10 +37,13 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     uint256 private rewardsPerHour;
 
     // Rewards per token burn deposited in wei.
-    uint256 private rewardsPerBurn;
+    uint256 public rewardsPerBurn;
 
     // Max amount of tokens per burn
     uint256 public maxBurnTokens;
+
+    // Amount of total burned tokens
+    uint256 public totalBurned;
 
     // Mapping of User Address to Staker info
     mapping(address => Staker) public stakers;
@@ -108,6 +113,9 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         for (uint256 i; i < len; ++i) {
             nftCollection.transferFrom(msg.sender, nullAddr, _tokenIds[i]);
         }
+
+        stakers[msg.sender].amountBurned += len;
+        totalBurned += len;
 
         uint256 random = uint256(
             keccak256(
@@ -199,9 +207,9 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     function userStakeInfo(address _user)
         public
         view
-        returns (uint256 _tokensStaked, uint256 _availableRewards)
+        returns (uint256 _tokensStaked, uint256 _tokensBurned, uint256 _availableRewards)
     {
-        return (stakers[_user].amountStaked, availableRewards(_user));
+        return (stakers[_user].amountStaked, stakers[_user].amountBurned, availableRewards(_user));
     }
 
     function availableRewards(address _user) internal view returns (uint256) {
