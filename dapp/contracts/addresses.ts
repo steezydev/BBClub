@@ -8,7 +8,7 @@
 const contractAddresses = {
   // ADDRESSES
   BeanzToken : '0x899888082D59390ABC7F0749F47ae0791269e061',
-  BeanzStaker : '0x440Ba0a8203aF30281a48452DdbD2c733dEA7E04',
+  BeanzStaker : '0xAa056fA74F86b0a2eDEC1BA6bb6af5b291B542Fb',
   BeanzDeployer: '0xabEc6a9052efe275FAA2D975ad2326eb8cb299a3',
 };
 

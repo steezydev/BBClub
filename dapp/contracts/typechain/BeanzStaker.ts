@@ -29,13 +29,22 @@ import type {
 
 export interface BeanzStakerInterface extends utils.Interface {
   functions: {
+    "burn(uint256[])": FunctionFragment;
+    "burnPaused()": FunctionFragment;
     "claimRewards()": FunctionFragment;
     "getStakedTokens(address)": FunctionFragment;
+    "maxBurnTokens()": FunctionFragment;
     "nftCollection()": FunctionFragment;
+    "nullAddr()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "rewardsToken()": FunctionFragment;
+    "setBurnPaused(bool)": FunctionFragment;
+    "setMaxBurnTokens(uint256)": FunctionFragment;
+    "setRewardsPerHour(uint256)": FunctionFragment;
+    "setStakedPaused(bool)": FunctionFragment;
     "stake(uint256[])": FunctionFragment;
+    "stakePaused()": FunctionFragment;
     "stakerAddress(uint256)": FunctionFragment;
     "stakers(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -45,13 +54,22 @@ export interface BeanzStakerInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "burn"
+      | "burnPaused"
       | "claimRewards"
       | "getStakedTokens"
+      | "maxBurnTokens"
       | "nftCollection"
+      | "nullAddr"
       | "owner"
       | "renounceOwnership"
       | "rewardsToken"
+      | "setBurnPaused"
+      | "setMaxBurnTokens"
+      | "setRewardsPerHour"
+      | "setStakedPaused"
       | "stake"
+      | "stakePaused"
       | "stakerAddress"
       | "stakers"
       | "transferOwnership"
@@ -59,6 +77,14 @@ export interface BeanzStakerInterface extends utils.Interface {
       | "withdraw"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "burn",
+    values: [PromiseOrValue<BigNumberish>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "burnPaused",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "claimRewards",
     values?: undefined
@@ -68,9 +94,14 @@ export interface BeanzStakerInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "maxBurnTokens",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "nftCollection",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "nullAddr", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -81,8 +112,28 @@ export interface BeanzStakerInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "setBurnPaused",
+    values: [PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMaxBurnTokens",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRewardsPerHour",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStakedPaused",
+    values: [PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "stake",
     values: [PromiseOrValue<BigNumberish>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "stakePaused",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "stakerAddress",
@@ -105,6 +156,8 @@ export interface BeanzStakerInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>[]]
   ): string;
 
+  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burnPaused", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "claimRewards",
     data: BytesLike
@@ -114,9 +167,14 @@ export interface BeanzStakerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "maxBurnTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "nftCollection",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "nullAddr", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -126,7 +184,27 @@ export interface BeanzStakerInterface extends utils.Interface {
     functionFragment: "rewardsToken",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "setBurnPaused",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMaxBurnTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRewardsPerHour",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setStakedPaused",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "stakePaused",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "stakerAddress",
     data: BytesLike
@@ -188,6 +266,13 @@ export interface BeanzStaker extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    burn(
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    burnPaused(overrides?: CallOverrides): Promise<[boolean]>;
+
     claimRewards(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -197,7 +282,11 @@ export interface BeanzStaker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]] & { tokenIds: BigNumber[] }>;
 
+    maxBurnTokens(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     nftCollection(overrides?: CallOverrides): Promise<[string]>;
+
+    nullAddr(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -207,10 +296,32 @@ export interface BeanzStaker extends BaseContract {
 
     rewardsToken(overrides?: CallOverrides): Promise<[string]>;
 
+    setBurnPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setMaxBurnTokens(
+      _maxBurnTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setRewardsPerHour(
+      _newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setStakedPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     stake(
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    stakePaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     stakerAddress(
       arg0: PromiseOrValue<BigNumberish>,
@@ -249,6 +360,13 @@ export interface BeanzStaker extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  burn(
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  burnPaused(overrides?: CallOverrides): Promise<boolean>;
+
   claimRewards(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -258,7 +376,11 @@ export interface BeanzStaker extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
+  maxBurnTokens(overrides?: CallOverrides): Promise<BigNumber>;
+
   nftCollection(overrides?: CallOverrides): Promise<string>;
+
+  nullAddr(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -268,10 +390,32 @@ export interface BeanzStaker extends BaseContract {
 
   rewardsToken(overrides?: CallOverrides): Promise<string>;
 
+  setBurnPaused(
+    _state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setMaxBurnTokens(
+    _maxBurnTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setRewardsPerHour(
+    _newValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setStakedPaused(
+    _state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   stake(
     _tokenIds: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  stakePaused(overrides?: CallOverrides): Promise<boolean>;
 
   stakerAddress(
     arg0: PromiseOrValue<BigNumberish>,
@@ -310,6 +454,13 @@ export interface BeanzStaker extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    burn(
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    burnPaused(overrides?: CallOverrides): Promise<boolean>;
+
     claimRewards(overrides?: CallOverrides): Promise<void>;
 
     getStakedTokens(
@@ -317,7 +468,11 @@ export interface BeanzStaker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
+    maxBurnTokens(overrides?: CallOverrides): Promise<BigNumber>;
+
     nftCollection(overrides?: CallOverrides): Promise<string>;
+
+    nullAddr(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -325,10 +480,32 @@ export interface BeanzStaker extends BaseContract {
 
     rewardsToken(overrides?: CallOverrides): Promise<string>;
 
+    setBurnPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setMaxBurnTokens(
+      _maxBurnTokens: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setRewardsPerHour(
+      _newValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setStakedPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     stake(
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    stakePaused(overrides?: CallOverrides): Promise<boolean>;
 
     stakerAddress(
       arg0: PromiseOrValue<BigNumberish>,
@@ -379,6 +556,13 @@ export interface BeanzStaker extends BaseContract {
   };
 
   estimateGas: {
+    burn(
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    burnPaused(overrides?: CallOverrides): Promise<BigNumber>;
+
     claimRewards(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -388,7 +572,11 @@ export interface BeanzStaker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    maxBurnTokens(overrides?: CallOverrides): Promise<BigNumber>;
+
     nftCollection(overrides?: CallOverrides): Promise<BigNumber>;
+
+    nullAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -398,10 +586,32 @@ export interface BeanzStaker extends BaseContract {
 
     rewardsToken(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setBurnPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setMaxBurnTokens(
+      _maxBurnTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setRewardsPerHour(
+      _newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setStakedPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     stake(
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    stakePaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     stakerAddress(
       arg0: PromiseOrValue<BigNumberish>,
@@ -430,6 +640,13 @@ export interface BeanzStaker extends BaseContract {
   };
 
   populateTransaction: {
+    burn(
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    burnPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     claimRewards(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -439,7 +656,11 @@ export interface BeanzStaker extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    maxBurnTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     nftCollection(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    nullAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -449,10 +670,32 @@ export interface BeanzStaker extends BaseContract {
 
     rewardsToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    setBurnPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setMaxBurnTokens(
+      _maxBurnTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setRewardsPerHour(
+      _newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setStakedPaused(
+      _state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     stake(
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    stakePaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stakerAddress(
       arg0: PromiseOrValue<BigNumberish>,
