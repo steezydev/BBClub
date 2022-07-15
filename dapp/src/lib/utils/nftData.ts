@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TNftData, TNftImage, TNftMetadata } from '@/types/nft.types';
 
 const TOKEN_NAME = 'BBC';
-const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
+const IPFS_GATEWAY = 'https://opensea.mypinata.cloud/ipfs';
 const METADATA_PREFIX = 'QmWYZ5ibdydZZHWdnPutxrEPWkzENL8z7zMGTPBbg7uSxj';
 const IMAGE_PREFIX = 'QmQF23AYjEx5R7SGtKQ3NRgeeUiY572HM6QqN2mUW2HaFU';
 

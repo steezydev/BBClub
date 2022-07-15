@@ -13,7 +13,7 @@ module.exports = {
   },
 
   images: {
-    domains: ['ipfs.io'],
+    domains: ['ipfs.io', 'opensea.mypinata.cloud'],
   },
 
   // SVGR
