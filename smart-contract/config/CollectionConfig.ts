@@ -17,7 +17,7 @@ const CollectionConfig: CollectionConfigInterface = {
 
   // ? FREE MINT
   whitelistReserved: 1110,
-  maxFree: 445,
+  maxFree: 1555,
   maxFreeMintAmountPerTx: 2,
   maxFreePerWallet: 10,
 
