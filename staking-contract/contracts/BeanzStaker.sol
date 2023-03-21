@@ -24,8 +24,6 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         // Amount of ERC721 Tokens staked
         uint256 amountStaked;
         // Amount of ERC721 Tokens burnt
-        uint256 amountBurned;
-        // Last time of details update for this User
         uint256 timeOfLastUpdate;
         // Calculated, but unclaimed rewards for the User. The rewards are
         // calculated each time the user writes to the Smart Contract
@@ -36,41 +34,23 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     // Rewards are cumulated once every hour.
     uint256 private rewardsPerHour;
 
-    // Rewards per token burn deposited in wei.
-    uint256 public rewardsPerBurn;
-
-    // Max amount of tokens per burn
-    uint256 public maxBurnTokens;
-
-    // Amount of total burned tokens
-    uint256 public totalBurned;
-
     // Mapping of User Address to Staker info
     mapping(address => Staker) public stakers;
     // Mapping of Token Id to staker. Made for the SC to remeber
     // who to send back the ERC721 Token to.
     mapping(uint256 => address) public stakerAddress;
 
-    //Null address for burned tokens
-    address public immutable nullAddr =
-        0x000000000000000000000000000000000000dEaD;
-
     bool public stakePaused = true;
-    bool public burnPaused = true;
 
     // Constructor function
     constructor(
         IERC721 _nftCollection,
         IERC20 _rewardsToken,
-        uint256 _rewardsPerHour,
-        uint256 _rewardsPerBurn,
-        uint256 _maxBurnTokens
+        uint256 _rewardsPerHour
     ) {
         nftCollection = _nftCollection;
         rewardsToken = _rewardsToken;
         rewardsPerHour = _rewardsPerHour;
-        rewardsPerBurn = _rewardsPerBurn;
-        maxBurnTokens = _maxBurnTokens;
     }
 
     // If address already has ERC721 Token/s staked, calculate the rewards.
@@ -90,7 +70,7 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
                 nftCollection.ownerOf(_tokenIds[i]) == msg.sender,
                 "Can't stake tokens you don't own!"
             );
-            nftCollection.transferFrom(msg.sender, address(this), _tokenIds[i]);
+            nftCollection.safeTransferFrom(msg.sender, address(this), _tokenIds[i]);
             //stakers[msg.sender].tokenIds.push(_tokenIds[i]);
             stakers[msg.sender].assets.push(_tokenIds[i]);
             stakers[msg.sender].indexOfAsset[_tokenIds[i]] =
@@ -101,34 +81,6 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         }
         stakers[msg.sender].amountStaked += len;
         stakers[msg.sender].timeOfLastUpdate = block.timestamp;
-    }
-
-    // User can burn from 1 to <maxBurnTokens> tokens
-    // The number of tokens will increase the chance of getting the reward
-    function burn(uint256[] calldata _tokenIds) external nonReentrant {
-        require(!burnPaused, "Burn is paused");
-        uint256 len = _tokenIds.length;
-        require(len > 0 && len < maxBurnTokens + 1, "Invalid number of tokens");
-
-        for (uint256 i; i < len; ++i) {
-            nftCollection.transferFrom(msg.sender, nullAddr, _tokenIds[i]);
-        }
-
-        stakers[msg.sender].amountBurned += len;
-        totalBurned += len;
-
-        uint256 random = uint256(
-            keccak256(
-                abi.encodePacked(block.timestamp, block.difficulty, msg.sender)
-            )
-        ) % 100;
-
-        bool success = len == maxBurnTokens
-            ? true
-            : random < ((len * 100) / maxBurnTokens);
-        if (success) {
-            rewardsToken.safeTransfer(msg.sender, rewardsPerBurn);
-        }
     }
 
     // Returns user's staked token Ids
@@ -158,7 +110,7 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
             removeAssetFromArray(_tokenIds[i], msg.sender);
 
             stakerAddress[_tokenIds[i]] = address(0);
-            nftCollection.transferFrom(address(this), msg.sender, _tokenIds[i]);
+            nftCollection.safeTransferFrom(address(this), msg.sender, _tokenIds[i]);
         }
         stakers[msg.sender].amountStaked -= len;
         stakers[msg.sender].timeOfLastUpdate = block.timestamp;
@@ -181,11 +133,6 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     /////////////
 
     //Set the rewardsPerHour variable
-    function setMaxBurnTokens(uint256 _maxBurnTokens) public onlyOwner {
-        maxBurnTokens = _maxBurnTokens;
-    }
-
-    //Set the rewardsPerHour variable
     function setRewardsPerHour(uint256 _newValue) public onlyOwner {
         rewardsPerHour = _newValue;
     }
@@ -195,11 +142,6 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
         stakePaused = _state;
     }
 
-    //Set the burnPaused variable
-    function setBurnPaused(bool _state) public onlyOwner {
-        burnPaused = _state;
-    }
-
     //////////
     // View //
     //////////
@@ -207,9 +149,9 @@ contract BeanzStaker is Ownable, ReentrancyGuard {
     function userStakeInfo(address _user)
         public
         view
-        returns (uint256 _tokensStaked, uint256 _tokensBurned, uint256 _availableRewards)
+        returns (uint256 _tokensStaked, uint256 _availableRewards)
     {
-        return (stakers[_user].amountStaked, stakers[_user].amountBurned, availableRewards(_user));
+        return (stakers[_user].amountStaked, availableRewards(_user));
     }
 
     function availableRewards(address _user) internal view returns (uint256) {

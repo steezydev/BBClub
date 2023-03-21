@@ -6,6 +6,7 @@ import "erc721a/contracts/ERC721A.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
     using Strings for uint256;
@@ -56,7 +57,7 @@ contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
     }
 
     modifier mintCompliance(uint256 _mintAmount) {
-        bool isFree = ((totalSupply() + _mintAmount <= maxFree - whitelistReserved) &&
+        bool isFree = ((totalSupply() + _mintAmount < maxFree + 1) &&
             (mintedWallets[_msgSender()] + _mintAmount <= maxFreePerWallet)) && !whitelistMintEnabled;
 
         if (isFree) {
@@ -87,7 +88,7 @@ contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
     }
 
     modifier mintPriceCompliance(uint256 _mintAmount) {
-        bool isFree = ((totalSupply() + _mintAmount <= maxFree - whitelistReserved) &&
+        bool isFree = ((totalSupply() + _mintAmount < maxFree + 1) &&
             (mintedWallets[_msgSender()] + _mintAmount <= maxFreePerWallet)) && !whitelistMintEnabled;
 
         uint256 price = cost;
@@ -134,13 +135,9 @@ contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
 
     function mintForAddress(uint256 _mintAmount, address _receiver)
         public
+        mintCompliance(_mintAmount)
         onlyOwner
     {
-      require(
-            totalSupply() + _mintAmount <= maxSupply,
-            "Max supply exceeded!"
-        );
-
         _safeMint(_receiver, _mintAmount);
     }
 
@@ -156,9 +153,9 @@ contract BeanzDeployer is ERC721A, Ownable, ReentrancyGuard {
         address latestOwnerAddress;
 
         while (
-            ownedTokenIndex < ownerTokenCount && currentTokenId < _currentIndex
+            ownedTokenIndex < ownerTokenCount && currentTokenId < _nextTokenId()
         ) {
-            TokenOwnership memory ownership = _ownerships[currentTokenId];
+            TokenOwnership memory ownership = _ownershipOf(currentTokenId);
 
             if (!ownership.burned) {
                 if (ownership.addr != address(0)) {
